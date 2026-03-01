@@ -9,8 +9,6 @@ RUN apt-get -y update && apt-get -y install \
 	build-essential \
 	bzip2 \
 	bzr \
-	cmake \
-	cmake-curses-gui \
 	cpio \
 	git \
 	libncurses5-dev \
@@ -22,6 +20,14 @@ RUN apt-get -y update && apt-get -y install \
 	wget \
 	zip \
   && rm -rf /var/lib/apt/lists/*
+
+RUN wget -q https://github.com/Kitware/CMake/releases/download/v3.27.9/cmake-3.27.9-linux-x86_64.tar.gz -O /tmp/cmake.tar.gz \
+  && tar -xzf /tmp/cmake.tar.gz -C /opt/ \
+  && ln -sf /opt/cmake-3.27.9-linux-x86_64/bin/cmake /usr/local/bin/cmake \
+  && ln -sf /opt/cmake-3.27.9-linux-x86_64/bin/ctest /usr/local/bin/ctest \
+  && ln -sf /opt/cmake-3.27.9-linux-x86_64/bin/cpack /usr/local/bin/cpack \
+  && ln -sf /opt/cmake-3.27.9-linux-x86_64/bin/ccmake /usr/local/bin/ccmake \
+  && rm /tmp/cmake.tar.gz
 
 RUN mkdir -p /root/workspace
 WORKDIR /root
